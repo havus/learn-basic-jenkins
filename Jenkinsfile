@@ -5,14 +5,23 @@ pipeline {
     }
   }
   stages {
-    stage('Hello') {
+    stage('Build') {
       steps {
-        echo 'Hello World'
+        echo 'Hello building...'
+        sh('./mvnw clean compile test-compile')
+        echo 'Finish deploy'
       }
     }
-    stage('Hello2') {
+    stage('Test') {
       steps {
-        echo 'Hello World 1'
+        echo 'Hello testing...'
+        sh('./mvnw test')
+        echo 'Finish test'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        echo 'Hello deploying...'
       }
     }
   }
