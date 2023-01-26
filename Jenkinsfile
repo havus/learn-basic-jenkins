@@ -33,7 +33,7 @@ pipeline {
             echo "Number ${i}"
           }
 
-          writeJson(file: 'data.json', json: data)
+          writeJSON(file: 'data.json', json: data)
         }
       }
     }
