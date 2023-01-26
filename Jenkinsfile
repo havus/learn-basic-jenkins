@@ -22,6 +22,11 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Hello deploying...'
+        script {
+          for (int i = 0; i < 10; i++) {
+            echo "Number ${i}"
+          }
+        }
       }
     }
   }
