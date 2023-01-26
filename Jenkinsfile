@@ -22,10 +22,18 @@ pipeline {
     stage('Deploy') {
       steps {
         echo 'Hello deploying...'
+
         script {
+          def data = [
+            'firstName': 'John',
+            'lastName': 'Doe'
+          ]
+
           for (int i = 0; i < 10; i++) {
             echo "Number ${i}"
           }
+
+          writeJson(file: 'data.json', json: data)
         }
       }
     }
