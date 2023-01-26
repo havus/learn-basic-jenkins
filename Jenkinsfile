@@ -16,4 +16,18 @@ pipeline {
       }
     }
   }
+  post {
+    always {
+      echo 'always post'
+    }
+    success {
+      echo 'success post'
+    }
+    failure {
+      echo 'failure post'
+    }
+    cleanup {
+      echo 'cleanup post'
+    }
+  }
 }
