@@ -4,13 +4,42 @@ pipeline {
       label 'linux && java11'
     }
   }
+
+  environment {
+    AUTHOR  = 'John Doe'
+    EMAIL   = 'johndoe@mail.com'
+    WEB     = 'example.com'
+  }
+
+  options {
+    disableConcurrentBuilds() // build jalan satu per satu
+    timeout(time: 30, unit: 'MINUTES')
+  }
+
+  parameters {
+    string(name: 'NAME', defaultValue: 'Guest', description: 'Your Name')
+    text(name: 'DESCRIPTION', defaultValue: 'Guest', description: 'Tell me about you')
+    booleanParam(name: 'DEPLOY', defaultValue: false, description: 'Need to Deploy?')
+    string(name: 'SOCIAL_MEDIA', choices: ['Instagram', 'Facebook', 'Twitter'], description: 'Which social media?')
+    string(name: 'SECRET', defaultValue: '', description: 'Encrypted key')
+  }
+
   stages {
+    stage('Print Parameters') {
+      steps {
+        echo "NAME: ${params.NAME}"
+        echo "DESCRIPTION: ${params.DESCRIPTION}"
+        echo "DEPLOY: ${params.DEPLOY}"
+        echo "SOCIAL_MEDIA: ${params.SOCIAL_MEDIA}"
+        echo "SECRET: ${params.SECRET}"
+      }
+    }
     stage('Build') {
       steps {
         echo 'Hello building...'
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
-        echo "Start Job: ${env.BRANCH_NAME}"
+        echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
         sh('./mvnw clean compile test-compile')
         echo 'Finish deploy'
       }
