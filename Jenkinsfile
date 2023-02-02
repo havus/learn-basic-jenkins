@@ -64,9 +64,9 @@ pipeline {
         message 'can we deploy?'
         ok 'yes of course!'
         submitter 'havus'
-        // parameters {
-        //   choice(name: ..., choices: [], description: ...)
-        // }
+        parameters {
+          choice(name: 'TARGET_ENV', choices: ['Staging', 'Sandbox', 'Production'], description: 'Which environment?')
+        }
       }
       // agent {
       //   node {
@@ -75,6 +75,7 @@ pipeline {
       // }
       steps {
         echo 'Hello deploying...'
+        echo "Environment ${TARGET_ENV}"
 
         script {
           def data = [
