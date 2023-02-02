@@ -31,6 +31,31 @@ pipeline {
   }
 
   stages {
+    stage('Preparation') {
+      // nested stages, pilih 'stages' atau 'steps', tidak bisa keduanya
+      // stages {
+      //   stage('prep#1') {
+      //     echo('')
+      //   }
+      // }
+
+      failFast true // by default, parallel tidak menghentikan stage jika salah satu error
+      parallel {
+        stage('prep#1') {
+          steps {
+            sleep 10
+            echo 'finish'
+          }
+        }
+        stage('prep#2') {
+          steps {
+            sleep 10
+            echo 'finish'
+          }
+        }
+      }
+    }
+
     stage('Print Parameters') {
       steps {
         echo "NAME: ${params.NAME}"
@@ -101,10 +126,6 @@ pipeline {
           writeJSON(file: 'data.json', json: data)
         }
       }
-    }
-
-    stage('Release') {
-
     }
   }
   post {
