@@ -73,7 +73,9 @@ pipeline {
         }
         stages {
           stage('prep#1') {
-            echo "Start Job: ${OS} ${ARC}"
+            steps {
+              echo "Start Job: ${OS} ${ARC}"
+            }
           }
         }
       }
