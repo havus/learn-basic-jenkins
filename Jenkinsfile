@@ -38,37 +38,46 @@ pipeline {
       //     echo('')
       //   }
       // }
+      // ----------------------------------------------------------------
+      // failFast true // by default, parallel tidak menghentikan stage jika salah satu error
+      // parallel {
+      //   stage('prep#1') {
+      //     steps {
+      //       sleep 10
+      //       echo 'finish'
+      //     }
+      //   }
+      //   stage('prep#2') {
+      //     steps {
+      //       sleep 10
 
-      failFast true // by default, parallel tidak menghentikan stage jika salah satu error
-      parallel {
-        stage('prep#1') {
-          steps {
-            sleep 10
-            echo 'finish'
+      //       echo "NAME: ${params.NAME}"
+      //       echo "DESCRIPTION: ${params.DESCRIPTION}"
+      //       echo "DEPLOY: ${params.DEPLOY}"
+      //       echo "SOCIAL_MEDIA: ${params.SOCIAL_MEDIA}"
+      //       echo "SECRET: ${params.SECRET}"
+      //     }
+      //   }
+      // }
+      // ----------------------------------------------------------------
+      matrix {
+        axes {
+          axis {
+            name 'OS'
+            values 'linux', 'windows', 'osx'
+          }
+          axis {
+            name 'ARC'
+            values '32', '64'
           }
         }
-        stage('prep#2') {
-          steps {
-            sleep 10
-            echo 'finish'
-          }
-        }
-      }
-    }
-
-    stage('Print Parameters') {
-      steps {
-        echo "NAME: ${params.NAME}"
-        echo "DESCRIPTION: ${params.DESCRIPTION}"
-        echo "DEPLOY: ${params.DEPLOY}"
-        echo "SOCIAL_MEDIA: ${params.SOCIAL_MEDIA}"
-        echo "SECRET: ${params.SECRET}"
       }
     }
 
     stage('Build') {
       steps {
         echo 'Hello building...'
+        echo "Start Job: ${OS} ${ARC}"
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
