@@ -71,6 +71,18 @@ pipeline {
             values '32', '64'
           }
         }
+        excludes {
+          exclude {
+            axis {
+              name 'OS'
+              values 'linux'
+            }
+            axis {
+              name 'ARC'
+              values '32'
+            }
+          }
+        }
         stages {
           stage('prep#1') {
             steps {
@@ -84,7 +96,6 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Hello building...'
-        echo "Start Job: ${OS} ${ARC}"
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
