@@ -71,10 +71,10 @@ pipeline {
             values '32', '64'
           }
         }
-      }
-      stages {
-        stage('prep#1') {
-          echo "Start Job: ${OS} ${ARC}"
+        stages {
+          stage('prep#1') {
+            echo "Start Job: ${OS} ${ARC}"
+          }
         }
       }
     }
