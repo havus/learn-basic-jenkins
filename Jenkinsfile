@@ -72,14 +72,11 @@ pipeline {
           }
         }
       }
-      steps {
-        echo "Start Job: ${OS} ${ARC}"
+      stages {
+        stage('prep#1') {
+          echo "Start Job: ${OS} ${ARC}"
+        }
       }
-      // stages {
-      //   stage('prep#1') {
-      //     echo('')
-      //   }
-      // }
     }
 
     stage('Build') {
