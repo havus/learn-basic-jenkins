@@ -24,6 +24,12 @@ pipeline {
     password(name: 'SECRET', defaultValue: '', description: 'Encrypted key')
   }
 
+  triggers {
+    cron('0 0 * * *')
+    // pollSCM('0 0 * * *')
+    // upstream(upstreamProjects: 'job1,job2', threshold: hudson.model.Result.SUCCESS)
+  }
+
   stages {
     stage('Print Parameters') {
       steps {
@@ -34,6 +40,7 @@ pipeline {
         echo "SECRET: ${params.SECRET}"
       }
     }
+
     stage('Build') {
       steps {
         echo 'Hello building...'
@@ -52,6 +59,20 @@ pipeline {
       }
     }
     stage('Deploy') {
+      input {
+        // id 'default is stage name'
+        message 'can we deploy?'
+        ok 'yes of course!'
+        submitter 'havus'
+        // parameters {
+        //   choice(name: ..., choices: [], description: ...)
+        // }
+      }
+      // agent {
+      //   node {
+      //     label 'linux && java11'
+      //   }
+      // }
       steps {
         echo 'Hello deploying...'
 
