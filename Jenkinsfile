@@ -47,17 +47,19 @@ pipeline {
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
-        sh('./mvnw clean compile test-compile')
+        // sh('./mvnw clean compile test-compile')
         echo 'Finish deploy'
       }
     }
+
     stage('Test') {
       steps {
         echo 'Hello testing...'
-        sh('./mvnw test')
+        // sh('./mvnw test')
         echo 'Finish test'
       }
     }
+
     stage('Deploy') {
       input {
         // id 'default is stage name'
@@ -68,17 +70,26 @@ pipeline {
           choice(name: 'TARGET_ENV', choices: ['Staging', 'Sandbox', 'Production'], description: 'Which environment?')
         }
       }
+
+      when {
+        expression {
+          return params.DEPLOY
+        }
+      }
+
       // agent {
       //   node {
       //     label 'linux && java11'
       //   }
       // }
+
       steps {
         echo 'Hello deploying...'
         echo "Environment ${TARGET_ENV}"
 
         script {
           def data = [
+            'id': env.BUILD_NUMBER,
             'firstName': 'John',
             'lastName': 'Doe'
           ]
@@ -90,6 +101,10 @@ pipeline {
           writeJSON(file: 'data.json', json: data)
         }
       }
+    }
+
+    stage('Release') {
+
     }
   }
   post {
