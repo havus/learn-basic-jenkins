@@ -98,89 +98,89 @@ pipeline {
       // }
     // }
 
-    stage('Build') {
-      environment {
-        TEST_CRED = credentials('havus_rahasia')
-      }
-      steps {
-        echo 'Hello building...'
-        echo "USERNAME: ${TEST_CRED_USR}"
-        // echo "PASS: ${TEST_CRED_PSW}" // -> will be masked
-        // sh('echo "PASS: $TEST_CRED_PSW"') // -> will be masked also
-        sh('echo "PASS: $TEST_CRED_PSW" > "test_cred_1.txt"') // -> will be masked also
-        echo "Start Job: ${env.JOB_NAME}"
-        echo "Start Job: ${env.BUILD_NUMBER}"
-        echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
-        // sh('./mvnw clean compile test-compile')
-        echo 'Finish deploy'
-      }
-    }
+    // stage('Build') {
+    //   environment {
+    //     TEST_CRED = credentials('havus_rahasia')
+    //   }
+    //   steps {
+    //     echo 'Hello building...'
+    //     echo "USERNAME: ${TEST_CRED_USR}"
+    //     // echo "PASS: ${TEST_CRED_PSW}" // -> will be masked
+    //     // sh('echo "PASS: $TEST_CRED_PSW"') // -> will be masked also
+    //     sh('echo "PASS: $TEST_CRED_PSW" > "test_cred_1.txt"') // -> will be masked also
+    //     echo "Start Job: ${env.JOB_NAME}"
+    //     echo "Start Job: ${env.BUILD_NUMBER}"
+    //     echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
+    //     // sh('./mvnw clean compile test-compile')
+    //     echo 'Finish deploy'
+    //   }
+    // }
 
-    stage('Test') {
-      steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'havus_rahasia',
-          usernameVariable: 'USER',
-          passwordVariable: 'PASSWORD'
-        )]) {
-          echo 'Hello testing...'
-          echo "test with cred ${USER} - ${PASSWORD}" // -> will be masked
-          // sh('./mvnw test')
-          echo 'Finish test'
-          sh('echo "test with cred $USER - $PASSWORD" > "test_cred_2.txt"')
-        }
-      }
-    }
+    // stage('Test') {
+    //   steps {
+    //     withCredentials([usernamePassword(
+    //       credentialsId: 'havus_rahasia',
+    //       usernameVariable: 'USER',
+    //       passwordVariable: 'PASSWORD'
+    //     )]) {
+    //       echo 'Hello testing...'
+    //       echo "test with cred ${USER} - ${PASSWORD}" // -> will be masked
+    //       // sh('./mvnw test')
+    //       echo 'Finish test'
+    //       sh('echo "test with cred $USER - $PASSWORD" > "test_cred_2.txt"')
+    //     }
+    //   }
+    // }
 
-    stage('Deploy') {
-      input {
-        // id 'default is stage name'
-        message 'can we deploy?'
-        ok 'yes of course!'
-        submitter 'havus'
-        parameters {
-          choice(name: 'TARGET_ENV', choices: ['Staging', 'Sandbox', 'Production'], description: 'Which environment?')
-        }
-      }
+    // stage('Deploy') {
+    //   input {
+    //     // id 'default is stage name'
+    //     message 'can we deploy?'
+    //     ok 'yes of course!'
+    //     submitter 'havus'
+    //     parameters {
+    //       choice(name: 'TARGET_ENV', choices: ['Staging', 'Sandbox', 'Production'], description: 'Which environment?')
+    //     }
+    //   }
 
-      when {
-        expression {
-          return params.DEPLOY
-        }
-      }
+    //   when {
+    //     expression {
+    //       return params.DEPLOY
+    //     }
+    //   }
 
-      // agent {
-      //   node {
-      //     label 'linux && java11'
-      //   }
-      // }
+    //   // agent {
+    //   //   node {
+    //   //     label 'linux && java11'
+    //   //   }
+    //   // }
 
-      steps {
-        echo 'Hello deploying...'
-        echo "Environment ${TARGET_ENV}"
+    //   steps {
+    //     echo 'Hello deploying...'
+    //     echo "Environment ${TARGET_ENV}"
 
-        script {
-          def data = [
-            'id': env.BUILD_NUMBER,
-            'firstName': 'John',
-            'lastName': 'Doe'
-          ]
+    //     script {
+    //       def data = [
+    //         'id': env.BUILD_NUMBER,
+    //         'firstName': 'John',
+    //         'lastName': 'Doe'
+    //       ]
 
-          for (int i = 0; i < 10; i++) {
-            echo "Number ${i}"
-          }
+    //       for (int i = 0; i < 10; i++) {
+    //         echo "Number ${i}"
+    //       }
 
-          writeJSON(file: 'data.json', json: data)
-        }
-      }
-    }
+    //       writeJSON(file: 'data.json', json: data)
+    //     }
+    //   }
+    // }
 
     stage('Shrlib') { // learn shared library
       steps {
         script {
           // <nama-flie>.<func-name>
           hello.sayHello()
-          Output.sayHello('John')
+          Output.sayHelloo('John')
           echo 'Shrlib - done'
         }
       }
