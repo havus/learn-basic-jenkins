@@ -180,7 +180,7 @@ pipeline {
         script {
           // <nama-flie>.<func-name>
           hello.sayHello()
-          Output.sayHelloo('John')
+          Output.sayHello('John')
           echo 'Shrlib - done'
         }
       }
