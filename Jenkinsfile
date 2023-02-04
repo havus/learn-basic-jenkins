@@ -1,3 +1,5 @@
+@Library("learn-jenkins-shared-lib@master") _
+
 pipeline {
   agent {
     node {
@@ -120,7 +122,7 @@ pipeline {
           passwordVariable: 'PASSWORD'
         )]) {
           echo 'Hello testing...'
-          echo "test with cred ${USER} - ${PASSWORD}"
+          echo "test with cred ${USER} - ${PASSWORD}" // -> will be masked
           // sh('./mvnw test')
           echo 'Finish test'
           sh('echo "test with cred $USER - $PASSWORD" > "test_cred_2.txt"')
@@ -167,6 +169,15 @@ pipeline {
           }
 
           writeJSON(file: 'data.json', json: data)
+        }
+      }
+    }
+
+    stage('Shrlib') { // learn shared library
+      steps {
+        script {
+          // <nama-flie>.<func-name>
+          hello.sayHello()
         }
       }
     }
