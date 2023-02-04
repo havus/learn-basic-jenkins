@@ -120,7 +120,7 @@ pipeline {
           passwordVariable: 'PASSWORD'
         )]) {
           echo 'Hello testing...'
-          echo "test with cred ${USER} - ${PASSWORD}"
+          echo "test with cred ${USER} - ${PASSWORD}" // -> will be masked
           // sh('./mvnw test')
           echo 'Finish test'
           sh('echo "test with cred $USER - $PASSWORD" > "test_cred_2.txt"')
