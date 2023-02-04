@@ -181,6 +181,7 @@ pipeline {
           // <nama-flie>.<func-name>
           hello.sayHello()
           Output.sayHello('John')
+          echo 'Shrlib - done'
         }
       }
     }
