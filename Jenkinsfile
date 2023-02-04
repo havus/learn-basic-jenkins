@@ -31,7 +31,7 @@ pipeline {
   }
 
   stages {
-    stage('Preparation') {
+    // stage('Preparation') {
       // nested stages, pilih 'stages' atau 'steps', tidak bisa keduanya
       // stages {
       //   stage('prep#1') {
@@ -60,39 +60,39 @@ pipeline {
       //   }
       // }
       // ----------------------------------------------------------------
-      matrix {
-        axes {
-          axis {
-            name 'OS'
-            values 'linux', 'windows', 'osx'
-          }
-          axis {
-            name 'ARC'
-            values '32', '64'
-          }
-        }
-        excludes {
-          exclude {
-            axis {
-              name 'OS'
-              values 'linux'
-            }
-            axis {
-              name 'ARC'
-              values '32'
-            }
-          }
-          // exclude {...}
-        }
-        stages {
-          stage('prep#1') {
-            steps {
-              echo "Start Job: ${OS} ${ARC}"
-            }
-          }
-        }
-      }
-    }
+      // matrix {
+      //   axes {
+      //     axis {
+      //       name 'OS'
+      //       values 'linux', 'windows', 'osx'
+      //     }
+      //     axis {
+      //       name 'ARC'
+      //       values '32', '64'
+      //     }
+      //   }
+      //   excludes {
+      //     exclude {
+      //       axis {
+      //         name 'OS'
+      //         values 'linux'
+      //       }
+      //       axis {
+      //         name 'ARC'
+      //         values '32'
+      //       }
+      //     }
+      //     // exclude {...}
+      //   }
+      //   stages {
+      //     stage('prep#1') {
+      //       steps {
+      //         echo "Start Job: ${OS} ${ARC}"
+      //       }
+      //     }
+      //   }
+      // }
+    // }
 
     stage('Build') {
       steps {
@@ -110,10 +110,10 @@ pipeline {
         withCredentials([usernamePassword(
           credentialsId: 'test_rahasia',
           usernameVariable: 'USER',
-          passwordVariable: 'PASSWORD',
+          passwordVariable: 'PASSWORD'
         )]) {
           echo 'Hello testing...'
-          echo "test with cred ${USER} - ${PASSWORD}"
+          // echo "test with cred ${USER} - ${PASSWORD}"
           // sh('./mvnw test')
           echo 'Finish test'
           sh('echo "test with cred $USER - $PASSWORD" > "test.txt"')
