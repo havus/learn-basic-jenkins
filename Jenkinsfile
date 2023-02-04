@@ -82,6 +82,7 @@ pipeline {
               values '32'
             }
           }
+          // exclude {...}
         }
         stages {
           stage('prep#1') {
@@ -106,9 +107,17 @@ pipeline {
 
     stage('Test') {
       steps {
-        echo 'Hello testing...'
-        // sh('./mvnw test')
-        echo 'Finish test'
+        withCredentials([usernamePassword(
+          credentialsId: 'test_rahasia',
+          usernameVariable: 'USER',
+          passwordVariable: 'PASSWORD',
+        )]) {
+          echo 'Hello testing...'
+          echo "test with cred ${USER} - ${PASSWORD}"
+          // sh('./mvnw test')
+          echo 'Finish test'
+          sh('echo "test with cred $USER - $PASSWORD" > "test.txt"')
+        }
       }
     }
 
