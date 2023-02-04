@@ -182,7 +182,7 @@ pipeline {
           hello.sayHello()
           Output.sayHello('John')
           Output.sayHelloWithStep(this, 'John')
-          echo 'Shrlib - done'
+          echo("${author.title()} ${author.name()}")
         }
       }
     }

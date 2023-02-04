@@ -1,5 +1,1 @@
-# Belajar Spring Dasar
-
-by Programmer Zaman Now
-
-# Trigger jenkins
+related repo https://github.com/havus/learn-jenkins-shared-lib
