@@ -95,8 +95,13 @@ pipeline {
     // }
 
     stage('Build') {
+      environment {
+        TEST_CRED = credentials('havus_rahasia')
+      }
       steps {
         echo 'Hello building...'
+        echo "USERNAME: ${TEST_CRED_USR}"
+        echo "PASS: ${TEST_CRED_PSW}"
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
@@ -108,12 +113,12 @@ pipeline {
     stage('Test') {
       steps {
         withCredentials([usernamePassword(
-          credentialsId: 'test_rahasia',
+          credentialsId: 'havus_rahasia',
           usernameVariable: 'USER',
           passwordVariable: 'PASSWORD'
         )]) {
           echo 'Hello testing...'
-          // echo "test with cred ${USER} - ${PASSWORD}"
+          echo "test with cred ${USER} - ${PASSWORD}"
           // sh('./mvnw test')
           echo 'Finish test'
           sh('echo "test with cred $USER - $PASSWORD" > "test.txt"')
