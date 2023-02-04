@@ -101,7 +101,8 @@ pipeline {
       steps {
         echo 'Hello building...'
         echo "USERNAME: ${TEST_CRED_USR}"
-        echo "PASS: ${TEST_CRED_PSW}"
+        // echo "PASS: ${TEST_CRED_PSW}" // -> will be masked
+        sh('echo "PASS: $TEST_CRED_PSW"') // -> will be masked
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
