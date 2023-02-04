@@ -1,3 +1,5 @@
+@Library("learn-jenkins-shared-lib@master") _
+
 pipeline {
   agent {
     node {
@@ -167,6 +169,15 @@ pipeline {
           }
 
           writeJSON(file: 'data.json', json: data)
+        }
+      }
+    }
+
+    stage('Shrlib') { // learn shared library
+      steps {
+        script {
+          // <nama-flie>.<func-name>
+          hello.sayHello()
         }
       }
     }
