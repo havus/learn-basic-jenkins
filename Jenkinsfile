@@ -1,5 +1,7 @@
 @Library("learn-jenkins-shared-lib@master") _
 
+import havus.jenkins.Output;
+
 pipeline {
   agent {
     node {
@@ -178,6 +180,7 @@ pipeline {
         script {
           // <nama-flie>.<func-name>
           hello.sayHello()
+          Output.sayHello('John')
         }
       }
     }
