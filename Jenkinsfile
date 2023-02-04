@@ -102,7 +102,8 @@ pipeline {
         echo 'Hello building...'
         echo "USERNAME: ${TEST_CRED_USR}"
         // echo "PASS: ${TEST_CRED_PSW}" // -> will be masked
-        sh('echo "PASS: $TEST_CRED_PSW"') // -> will be masked
+        // sh('echo "PASS: $TEST_CRED_PSW"') // -> will be masked also
+        sh('echo "PASS: $TEST_CRED_PSW" > "test_cred_1.txt"') // -> will be masked also
         echo "Start Job: ${env.JOB_NAME}"
         echo "Start Job: ${env.BUILD_NUMBER}"
         echo "Start Job: ${env.BRANCH_NAME}" // will null except new job with multi branch pipelinne
@@ -122,7 +123,7 @@ pipeline {
           echo "test with cred ${USER} - ${PASSWORD}"
           // sh('./mvnw test')
           echo 'Finish test'
-          sh('echo "test with cred $USER - $PASSWORD" > "test.txt"')
+          sh('echo "test with cred $USER - $PASSWORD" > "test_cred_2.txt"')
         }
       }
     }
