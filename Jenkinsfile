@@ -3,7 +3,8 @@
 import havus.jenkins.Output;
 
 // for declarative pipeline, don't need to build pipeline code for every single repo
-mavenPipeline()
+// benefitnya bisa pakai if else atau script lain di lib nya
+mavenPipeline([])
 
 // pipeline {
 //   agent {
