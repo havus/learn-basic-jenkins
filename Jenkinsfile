@@ -182,7 +182,6 @@ pipeline {
           hello.sayHello()
           Output.sayHello('John')
           Output.sayHelloWithStep(this, 'John')
-          Output.sayHelloWithStep(this, 'John')
           echo("${author.title()} ${author.name()}")
           echo("call: ${author()}")
           hello.sayHelloToAll(["John", "Doe", "Maverick"])
@@ -190,6 +189,9 @@ pipeline {
             firstName: 'Budi',
             lastName: 'Setiawan',
           ])
+
+          def config = libraryResource("config/build.json")
+          echo(config)
         }
       }
     }
