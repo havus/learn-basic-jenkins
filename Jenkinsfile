@@ -182,7 +182,14 @@ pipeline {
           hello.sayHello()
           Output.sayHello('John')
           Output.sayHelloWithStep(this, 'John')
+          Output.sayHelloWithStep(this, 'John')
           echo("${author.title()} ${author.name()}")
+          echo("call: ${author()}")
+          hello.sayHelloToAll(["John", "Doe", "Maverick"])
+          hello.sayHelloToPerson([
+            firstName: 'Budi',
+            lastName: 'Setiawan',
+          ])
         }
       }
     }
